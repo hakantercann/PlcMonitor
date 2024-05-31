@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['gauge'] });
+        google.charts.setOnLoadCallback(drawGauge);
+        var getData = false;
+        var gaugeOptions = {
+            min: 0, max: 280, yellowFrom: 200, yellowTo: 250,
+            redFrom: 250, redTo: 280, minorTicks: 5
+        };
+        var gauge;
+
+        function drawGauge() {
+            gaugeData = new google.visualization.DataTable();
+            gaugeData.addColumn('number', 'Deneme');
+            gaugeData.addRows(1);
+            gaugeData.setCell(0, 0, 0);
+
+            gauge = new google.visualization.Gauge(document.getElementById('gauge_div'));
+            gauge.draw(gaugeData, gaugeOptions);
+        }
+
+        function changeTemp(dir) {
+            gaugeData.setValue(0, 0, gaugeData.getValue(0, 0) + dir * 25);
+            //  gaugeData.setValue(0, 1, gaugeData.getValue(0, 1) + dir * 20);
+        }
+        setInterval(async () => {
+            if (getData) {
+                const response = await fetch("https://localhost:7256/WeatherForecast");
+                const value = await response.json();
+                gaugeData.setCell(0, 0, parseInt(value.temperatureC));
+                gauge.draw(gaugeData, gaugeOptions); console.log(value);
+            }
+        }, 100)
+        function toggleGetData() {
+            getData = !getData;
+        }
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="text">
+        Dashboard
+        
+    <div id="gauge_div" style="width:280px; height: 140px;"></div>
+    <button onclick="toggleGetData()">  Get Data  </button>
+    </div>
+</body>
+</html>

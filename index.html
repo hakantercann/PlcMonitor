@@ -1,0 +1,177 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['gauge'] });
+        google.charts.setOnLoadCallback(drawGauge);
+        var getData = true;
+        var gaugeOptions1 = {
+            min: 0, max: 5000, yellowFrom: 3200, yellowTo: 4000,
+            redFrom: 4000, redTo: 5000, minorTicks: 10
+        };
+        var gaugeOptions2 = {
+            min: 0, max: 2500, yellowFrom: 1600, yellowTo: 2000,
+            redFrom: 2000, redTo: 2500, minorTicks: 10
+        };
+        var gaugeOptions3 = {
+            min: 0, max: 1250, yellowFrom: 800, yellowTo: 1000,
+            redFrom: 1000, redTo: 1250, minorTicks: 10
+        };
+        var gaugeOptions4 = {
+            min: 0, max: 625, yellowFrom: 400, yellowTo: 500,
+            redFrom: 500, redTo: 625, minorTicks: 10
+        };
+        var gauge1;
+        var gauge2;
+        var gauge3;
+        var gauge4;
+        function drawGauge() {
+           
+            gaugeData1 = new google.visualization.DataTable();
+            gaugeData1.addColumn('number', 'Deneme1');
+            gaugeData1.addRows(1);
+            gaugeData1.setCell(0, 0, 0);
+            gaugeData2 = new google.visualization.DataTable();
+            gaugeData2.addColumn('number', 'Deneme2');
+            gaugeData2.addRows(1);
+            gaugeData2.setCell(0, 0, 0);
+            gaugeData3 = new google.visualization.DataTable();
+            gaugeData3.addColumn('number', 'Deneme3');
+            gaugeData3.addRows(1);
+            gaugeData3.setCell(0, 0, 0);
+            gaugeData4 = new google.visualization.DataTable();
+            gaugeData4.addColumn('number', 'Deneme4');
+            gaugeData4.addRows(1);
+            gaugeData4.setCell(0, 0, 0);
+            gauge1 = new google.visualization.Gauge(document.getElementById('gauge_div1'));
+            gauge1.draw(gaugeData1, gaugeOptions1);
+            gauge2 = new google.visualization.Gauge(document.getElementById('gauge_div2'));
+            gauge2.draw(gaugeData2, gaugeOptions2);
+            gauge3 = new google.visualization.Gauge(document.getElementById('gauge_div3'));
+            gauge3.draw(gaugeData3, gaugeOptions3);
+            gauge4 = new google.visualization.Gauge(document.getElementById('gauge_div4'));
+            gauge4.draw(gaugeData4, gaugeOptions4);
+        }
+
+        setInterval(async () => {
+            if (getData) {
+                const response = await fetch("https://localhost:7256/WeatherForecast");
+                const value = await response.json();
+                gaugeData1.setCell(0, 0, parseInt(value.deneme1));
+                gauge1.draw(gaugeData1, gaugeOptions1); 
+                gaugeData2.setCell(0, 0, parseInt(value.deneme2));
+                gauge2.draw(gaugeData2, gaugeOptions2);
+                gaugeData3.setCell(0, 0, parseInt(value.deneme3));
+                gauge3.draw(gaugeData3, gaugeOptions3); 
+                gaugeData4.setCell(0, 0, parseInt(value.deneme4));
+                gauge4.draw(gaugeData4, gaugeOptions4); 
+            }
+        }, 100)
+        function toggleGetData() {
+            getData = !getData;
+        }
+    </script>
+    <meta charset="UTF-8" <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <nav class="sidebar">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="baridalogo.png" alt="logo">
+                </span>
+            </div>
+            <div class="text header-text">
+                <span class="name">Barida Makina</span>
+                <span class="proffession"></span>
+
+            </div>
+            <i class="bx bx-chevron-right toggle"></i>
+        </header>
+        <div class="menu-bar">
+            <div class="menu">
+                <li class="search-box">
+
+                    <i class="bx bx-search icon"></i>
+                    <input type="text" placeholder="Search...">
+
+                </li>
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class="bx bx-home-alt icon"></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#otomatik">
+                            <i class="bx bx-home-alt icon"></i>
+                            <span class="text nav-text">Otomatik</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#timeline">
+                            <i class="bx bx-bar-chart-square icon"></i>
+                            <span class="text nav-text">Timeline</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bottom-content">
+                <li class="nav-link">
+                    <a href="#">
+                        <i class="bx bx-log-out icon"></i>
+                        <span class="text nav-text">Log Out</span>
+                    </a>
+                </li>
+                <li class="mode">
+                    <div class="moon-sun">
+                        <i class="bx bx-moon icon moon"></i>
+                        <i class="bx bx-sun icon sun"></i>
+                    </div>
+                    <span class="mode-text text">Dark Mode</span>
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </nav>
+    <section class="home">
+        <div class="home-part">
+            <div class="home-part-header">
+                <div class="col1">
+                    <div class="gauge" id="gauge_div1"></div>
+                    
+                </div>
+                <div class="col1">
+                    <div class="gauge" id="gauge_div2"></div>
+                    
+                </div>
+                <div class="col1">
+                    <div class="gauge" id="gauge_div3"></div>
+                    
+                </div>
+                <div class="col1">
+                    <div class="gauge" id="gauge_div4"></div>
+                    
+                </div>
+               
+            </div>
+            <div class="home-part-body">
+
+            </div>
+        </div>
+        
+    </section>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
