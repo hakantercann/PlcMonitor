@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinamik Satır Ekleme</title>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .add-row-btn {
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+
+<button class="add-row-btn" onclick="addRow()">Satır Ekle</button>
+
+<table id="dataTable">
+    <thead>
+        <tr>
+            <th>labelName</th>
+            <th>tagAddress</th>
+            <th>variableType</th>
+            <th>skipByte</th>
+            <th>takeByte</th>
+            <th>labelType</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+       
+    </tbody>
+</table>
+
+<script>
+    function addRow() {
+        var tableBody = document.getElementById("tableBody");
+        var newRow = tableBody.insertRow();
+        //labelName
+        var newCell = newRow.insertCell();
+        var input = document.createElement("input");
+        input.type = "text";
+        newCell.appendChild(input);
+        //tagAddress
+        var newCell = newRow.insertCell();
+        var input = document.createElement("input");
+        input.type = "text";
+        newCell.appendChild(input);
+        //variableType
+        var newCell = newRow.insertCell();
+        var select = document.createElement("select");
+        select.classList.add("selectpicker");
+        var option1 = document.createElement("option");
+        option1.text = "Int";
+        var option2 = document.createElement("option");
+        option2.text = "Float";
+        select.add(option1);
+        select.add(option2);
+        newCell.appendChild(select);
+        //skipbyte
+        var newCell = newRow.insertCell();
+        var input = document.createElement("input");
+        input.type = "text";
+        newCell.appendChild(input);
+        //takebyte
+        var newCell = newRow.insertCell();
+        var input = document.createElement("input");
+        input.type = "text";
+        newCell.appendChild(input);
+        //labeltype
+        var newCell = newRow.insertCell();
+        var select = document.createElement("select");
+        select.classList.add("selectpicker"); 
+        var option1 = document.createElement("option");
+        option1.text = "Label";
+        select.add(option1);
+        newCell.appendChild(select);
+       
+    }
+</script>
+
+</body>
+</html>

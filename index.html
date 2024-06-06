@@ -56,7 +56,7 @@
 
         setInterval(async () => {
             if (getData) {
-                const response = await fetch("https://localhost:7256/WeatherForecast");
+               /* const response = await fetch("https://localhost:7256/WeatherForecast");
                 const value = await response.json();
                 gaugeData1.setCell(0, 0, parseInt(value.deneme1));
                 gauge1.draw(gaugeData1, gaugeOptions1); 
@@ -65,7 +65,7 @@
                 gaugeData3.setCell(0, 0, parseInt(value.deneme3));
                 gauge3.draw(gaugeData3, gaugeOptions3); 
                 gaugeData4.setCell(0, 0, parseInt(value.deneme4));
-                gauge4.draw(gaugeData4, gaugeOptions4); 
+                gauge4.draw(gaugeData4, gaugeOptions4); */
             }
         }, 100)
         function toggleGetData() {
@@ -163,7 +163,7 @@
                 </div>
                
             </div>
-            <div class="home-part-body">
+            <div id="announceBody" class="home-part-body">
 
             </div>
         </div>
